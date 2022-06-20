@@ -6,9 +6,9 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/LosWarriorsAndWeirdos/TeContrato-Micro-Services.git
+          uri: https://github.com/LosWarriorsAndWeirdos/micro-services-tecontrato.git
           searchPaths: config-data
-          default-label: "master"
+          default-label: "main"
   security:
     user:
       name: root
