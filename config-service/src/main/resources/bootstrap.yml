@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/LosWarriorsAndWeirdos/TeContrato-Micro-Services.git
+          searchPaths: config-data
+          default-label: "master"
+  security:
+    user:
+      name: root
+      password: s3cr3t

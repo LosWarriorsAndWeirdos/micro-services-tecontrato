@@ -1,0 +1,1 @@
+INSERT INTO contractors (id, dni, description) VALUES (1, 12345, 'técnico')
