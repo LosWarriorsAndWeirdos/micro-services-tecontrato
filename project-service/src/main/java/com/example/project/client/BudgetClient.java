@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@FeignClient(name= "budget-service")
+@FeignClient(name= "budget-service", fallback = BudgetHystrixFallbackFactory.class)
 public interface BudgetClient {
     @RequestMapping("/budgets/{id}")
     public ResponseEntity<Budget> getBudget(@PathVariable("id") long id);
