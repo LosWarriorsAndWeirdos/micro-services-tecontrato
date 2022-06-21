@@ -1,0 +1,107 @@
+version: '3'
+services:
+  registry-service:
+    image: registry-service:0.0.1-SNAPSHOT
+    ports:
+      - 8761:8761
+    networks:
+      - tecontrato
+
+  config-service:
+    image: config-service:0.0.1-SNAPSHOT
+    links:
+      - registry-service
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://registry-service:8761/eureka
+    depends_on:
+      - registry-service
+    ports:
+      - 8081:8081
+    networks:
+      - tecontrato
+
+  admin:
+    image: admin:0.0.1-SNAPSHOT
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://registry-service:8761/eureka
+    restart: on-failure
+    depends_on:
+      - registry-service
+      - config-service
+    ports:
+      - 8086:8086
+    networks:
+      - tecontrato1
+
+  gateway-service:
+    image: gateway-service:0.0.1-SNAPSHOT
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://registry-service:8761/eureka
+    depends_on:
+      - registry-service
+      - config-service
+    networks:
+      - tecontrato1
+    ports:
+      - 8080:8080
+
+  budget-service:
+    image: budget-service:0.0.1-SNAPSHOT
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://registry-service:8761/eureka
+    depends_on:
+      - registry-service
+      - config-service
+    networks:
+      - tecontrato
+    ports:
+      - 8092:8092
+
+  contractor-service:
+    image: contractor-service:0.0.1-SNAPSHOT
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://registry-service:8761/eureka
+    restart: on-failure
+    depends_on:
+      - registry-service
+      - config-service
+    networks:
+      - tecontrato
+    ports:
+      - 8091:8091
+
+  project-service:
+    image: project-service:0.0.1-SNAPSHOT
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://registry-service:8761/eureka
+    restart: on-failure
+    depends_on:
+      - registry-service
+      - config-service
+    networks:
+      - tecontrato1
+    ports:
+      - 8093:8093
+
+  propietario-service:
+    image: propietario-service:0.0.1-SNAPSHOT
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://registry-service:8761/eureka
+    restart: on-failure
+    depends_on:
+      - registry-service
+      - config-service
+    networks:
+      - tecontrato1
+    ports:
+      - 8095:8095
+
+networks:
+  tecontrato1:
